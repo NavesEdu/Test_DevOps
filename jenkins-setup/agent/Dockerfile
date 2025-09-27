@@ -7,7 +7,7 @@ RUN apk update && apk add --no-cache \
     g++ \
     cmake \
     git \
-    clang-tools \
+    clang-extra-tools \
     gtest-dev
 
 USER jenkins
