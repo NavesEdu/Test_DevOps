@@ -1,15 +1,13 @@
-FROM jenkins/inbound-agent:latest-jdk17
+FROM jenkins/inbound-agent:alpine-jdk17 # Imagem base muito menor
 
 USER root
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
+RUN apk update && apk add --no-cache \
+    build-base \
     g++ \
     cmake \
     git \
-    clang-tidy \
-    clang-format \
-    libgtest-dev \
-    && apt-get clean
+    clang-tools \
+    gtest-dev
 
 USER jenkins
