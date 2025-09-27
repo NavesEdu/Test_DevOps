@@ -1,4 +1,4 @@
-FROM jenkins/inbound-agent:alpine-jdk17 # Imagem base muito menor
+FROM jenkins/inbound-agent:alpine-jdk17
 
 USER root
 
