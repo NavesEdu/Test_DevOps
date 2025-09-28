@@ -40,6 +40,36 @@ jenkins:
         labelString: "cpp-agent"
         remoteFS: /home/jenkins/agent
 
+jobs:
+  - script: |
+      multibranchPipelineJob('Test_DevOps_Multibranch_Pipeline') {
+        branchSources {
+          github {
+            id('Test_DevOps_Pipeline')
+            repoOwner('NavesEdu')
+            repository('Test_DevOps')
+          }
+        }
+        
+        factory {
+          workflowBranchProjectFactory {
+            scriptPath('Jenkinsfile') 
+          }
+        }
+
+        configure { node ->
+          node / 'triggers' << 'com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger'{
+            // Configura o Job Multibranch para escanear a cada 15 minutos (por exemplo)
+            interval('15m')
+          }
+
+          def traits = node / sources / data / 'jenkins.branch.BranchSource' / source / traits
+          traits << 'org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait' {
+            strategyId(3) // 3 = Descobrir branches padrão e feature
+          }
+        }
+      }
+
 unclassified:
   location:
     adminAddress: ${JENKINS_ADMIN_EMAIL}
