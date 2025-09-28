@@ -86,16 +86,14 @@ Toda a infraestrutura do Jenkins é inicializada via IaC, utilizando o Docker Co
     * **Credenciais (Usuário Admin):**
         * Usuário: `admin`
         * Senha: `admin`
+<img width="2559" height="1355" alt="Image" src="https://github.com/user-attachments/assets/a6d9056c-425c-4d84-888e-3b9e8882e72f" />
+<img width="2557" height="1363" alt="Image" src="https://github.com/user-attachments/assets/62108e51-8963-4f7d-87e1-5e654cf8d1da" />
 
 ### 4.3. Execução e Validação da Pipeline
 
 A pipeline está pronta para ser executada no ambiente `cpp-agent` assim que o Jenkins for inicializado.
 
-1.  **Crie o Job Pipeline:**
-    * No Jenkins UI, crie um novo item do tipo **Pipeline**.
-    * No campo **Definição**, selecione **"Pipeline script from SCM"**.
-    * Configure o SCM para **Git** e aponte para o **URL do seu repositório**.
-    * Defina o Script Path como `Jenkinsfile`.
+1.  **Não é necessário criar o Job, já que o JCasC é configurado pra isso**
 
 2.  **Execute o Build (Testando os Parâmetros):**
     Use a opção **"Build With Parameters"** para validar as funcionalidades condicionais:
