@@ -8,6 +8,11 @@ RUN apk update && apk add --no-cache \
     cmake \
     git \
     clang-extra-tools \
-    gtest-dev
+    gtest-dev \
+    curl
 
 USER jenkins
+
+COPY agent.sh /usr/local/bin/agent.sh
+RUN chmod +x /usr/local/bin/agent.sh
+ENTRYPOINT ["/usr/local/bin/agent.sh"]

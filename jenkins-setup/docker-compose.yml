@@ -1,16 +1,42 @@
 services:
-  jenkins:
-    image: jenkins/jenkins:lts-jdk17
+  jenkins-controller:
+    build:
+      context: ./controller
     privileged: true
     user: root
     ports:
       - "8080:8080"
     container_name: jenkins-controller
     environment:
-      - CASC_JENKINS_CONFIG=/var/jenkins_home/casc.yml
-      - JAVA_OPTS=-Xmx2048m
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false -Xmx2048m
+      - CASC_JENKINS_CONFIG=/usr/share/jenkins/ref/casc.yml
     volumes:
       - ./jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./casc.yml:/var/jenkins_home/casc.yml
-      - ./plugins.txt:/usr/share/jenkins/ref/plugins.txt
+      - ./controller/casc.yml:/usr/share/jenkins/ref/casc.yml
+
+  agent-1:
+    image: cpp-jenkins-agent:latest
+    container_name: jenkins-agent-1
+    depends_on:
+      - jenkins-controller
+    environment:
+      - JENKINS_AGENT_NAME=agent-1
+      - JENKINS_URL=http://jenkins-controller:8080
+      - JENKINS_AGENT_WORKDIR=/home/jenkins/agent
+      - JENKINS_WEB_SOCKET=true
+      - JENKINS_AGENT_USERNAME=agent
+      - JENKINS_AGENT_PASSWORD=agent
+
+  agent-2:
+    image: cpp-jenkins-agent:latest
+    container_name: jenkins-agent-2
+    depends_on:
+      - jenkins-controller
+    environment:
+      - JENKINS_AGENT_NAME=agent-2
+      - JENKINS_URL=http://jenkins-controller:8080
+      - JENKINS_AGENT_WORKDIR=/home/jenkins/agent
+      - JENKINS_WEB_SOCKET=true
+      - JENKINS_AGENT_USERNAME=agent
+      - JENKINS_AGENT_PASSWORD=agent

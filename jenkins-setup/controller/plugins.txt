@@ -4,3 +4,4 @@ workflow-aggregator:latest
 docker-plugin:latest
 docker-workflow:latest
 blueocean:latest
+matrix-auth:latest
