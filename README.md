@@ -183,3 +183,7 @@ A etapa de `Archive Artifacts` será substituída por:
 
 * **Stage de Deploy:** Adicionar uma *Stage* de **`Deploy to Staging`** após o sucesso do *push* da imagem.
 * **Tecnologia:** Utilizar uma ferramenta de orquestração moderna como **Kubernetes (via `kubectl` ou Helm Charts)** para gerenciar o ambiente de *staging* e produção.
+
+#### 3. Notificação e Feedback Imediato
+* **Ativação de Notificações:** As regras de notificação por e-mail (`post { success {} failure {} }`) já estão implementadas no `Jenkinsfile` (atualmente comentadas). O próximo passo é **descomentar e configurar o plugin `email-ext`** no Jenkins Controller.
+    * **Valor Agregado:** Isso garante que a equipe receba feedback imediato sobre o status do build, **quebrando o loop de feedback** e reduzindo o tempo de resolução de falhas.
