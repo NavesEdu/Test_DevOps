@@ -1,0 +1,49 @@
+jenkins:
+  systemMessage: "Jenkins configurado via JCasC por Eduardo - Desafio Philips DevOps"
+  mode: NORMAL
+  numExecutors: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: ${JENKINS_ADMIN_USERNAME}
+          password: ${JENKINS_ADMIN_PASSWORD}
+        - id: ${JENKINS_AGENT_USERNAME}
+          password: ${JENKINS_AGENT_PASSWORD}
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+          - name: admin
+            permissions: 
+              - Overall/Administer
+            entries: 
+              - user: ${JENKINS_ADMIN_USERNAME}
+          - name: agent
+            permissions: 
+              - Overall/Read
+              - Agent/Connect
+              - Agent/Disconnect
+              - Agent/Build
+            entries: 
+              - user: ${JENKINS_AGENT_USERNAME}
+
+  nodes:
+    - permanent:
+        name: agent1
+        launcher: inbound
+        labelString: "cpp-agent"
+        remoteFS: /home/jenkins/agent
+    - permanent:
+        name: agent2
+        launcher: inbound
+        labelString: "cpp-agent"
+        remoteFS: /home/jenkins/agent
+
+unclassified:
+  location:
+    adminAddress: ${JENKINS_ADMIN_EMAIL}
+    url: http://localhost:8080/
+
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleOnOver

@@ -1,42 +1,42 @@
 services:
-  jenkins-controller:
-    build:
-      context: ./controller
-    privileged: true
-    user: root
+  jenkins:
+    build: 
+      context: .
+      dockerfile: Dockerfile.controller
     ports:
       - "8080:8080"
-    container_name: jenkins-controller
     environment:
-      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false -Xmx2048m
-      - CASC_JENKINS_CONFIG=/usr/share/jenkins/ref/casc.yml
-    volumes:
-      - ./jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./controller/casc.yml:/usr/share/jenkins/ref/casc.yml
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+      - CASC_JENKINS_CONFIG=/usr/share/jenkins/ref/jenkins.yml
+      - JENKINS_ADMIN_USERNAME=${JENKINS_ADMIN_USERNAME:-admin}
+      - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD:-admin}
+      - JENKINS_AGENT_USERNAME=${JENKINS_AGENT_USERNAME:-agent}
+      - JENKINS_AGENT_PASSWORD=${JENKINS_AGENT_PASSWORD:-agent}
 
-  agent-1:
-    image: cpp-jenkins-agent:latest
-    container_name: jenkins-agent-1
-    depends_on:
-      - jenkins-controller
+  agent1:
+    build: 
+      context: .
+      dockerfile: Dockerfile.agent
     environment:
-      - JENKINS_AGENT_NAME=agent-1
-      - JENKINS_URL=http://jenkins-controller:8080
+      - JENKINS_AGENT_NAME=agent1
+      - JENKINS_URL=http://jenkins:8080
       - JENKINS_AGENT_WORKDIR=/home/jenkins/agent
       - JENKINS_WEB_SOCKET=true
-      - JENKINS_AGENT_USERNAME=agent
-      - JENKINS_AGENT_PASSWORD=agent
-
-  agent-2:
-    image: cpp-jenkins-agent:latest
-    container_name: jenkins-agent-2
+      - JENKINS_AGENT_USERNAME=${JENKINS_AGENT_USERNAME:-agent}
+      - JENKINS_AGENT_PASSWORD=${JENKINS_AGENT_PASSWORD:-agent}
     depends_on:
-      - jenkins-controller
+      - jenkins
+
+  agent2:
+    build: 
+      context: .
+      dockerfile: Dockerfile.agent
     environment:
-      - JENKINS_AGENT_NAME=agent-2
-      - JENKINS_URL=http://jenkins-controller:8080
+      - JENKINS_AGENT_NAME=agent2
+      - JENKINS_URL=http://jenkins:8080
       - JENKINS_AGENT_WORKDIR=/home/jenkins/agent
       - JENKINS_WEB_SOCKET=true
-      - JENKINS_AGENT_USERNAME=agent
-      - JENKINS_AGENT_PASSWORD=agent
+      - JENKINS_AGENT_USERNAME=${JENKINS_AGENT_USERNAME:-agent}
+      - JENKINS_AGENT_PASSWORD=${JENKINS_AGENT_PASSWORD:-agent}
+    depends_on:
+      - jenkins

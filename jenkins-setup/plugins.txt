@@ -1,0 +1,9 @@
+ansicolor:latest
+configuration-as-code:latest
+github-branch-source:latest
+job-dsl:latest
+nodejs:latest
+role-strategy:latest
+workflow-aggregator:latest
+workflow-multibranch:latest
+blueocean:latest
