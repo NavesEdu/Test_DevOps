@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 template <typename T>
 class Calculator {
  private:
@@ -13,5 +15,10 @@ class Calculator {
 
   inline T multiply() { return number1 * number2; }
 
-  inline T divide() { return number1 / number2; }
+  inline T divide() {
+    if (number2 == 0) {
+      throw std::runtime_error("Division by zero");
+    }
+    return number1 / number2;
+  }
 };
