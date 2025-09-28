@@ -22,23 +22,36 @@ pipeline {
         }
 
         stage('Build & Test') {
-            steps {
-                dir('calculator') {
-                    stage('Code Check') {
-                        when { expression { return params.SKIP_CHECKS_AND_TESTS == false } }
-                        steps { sh 'make check' }
-                    }
-                    stage('Build') {
-                        steps { sh 'make' }
-                    }
-                    stage('Test') {
-                        when { expression { return params.SKIP_CHECKS_AND_TESTS == false } }
-                        steps { sh 'make unittest' }
-                    }
-                    stage('Archive Artifacts') {
-                        steps {
-                            archiveArtifacts artifacts: env.ARTIFACT_PATH, followSymlinks: false
+            stages {
+                stage('Code Check') {
+                    when { expression { return params.SKIP_CHECKS_AND_TESTS == false } }
+                    steps {
+                        dir('calculator') {
+                            sh 'make check'
                         }
+                    }
+                }
+
+                stage('Build') {
+                    steps {
+                        dir('calculator') {
+                            sh 'make'
+                        }
+                    }
+                }
+
+                stage('Test') {
+                    when { expression { return params.SKIP_CHECKS_AND_TESTS == false } }
+                    steps {
+                        dir('calculator') {
+                            sh 'make unittest'
+                        }
+                    }
+                }
+
+                stage('Archive Artifacts') {
+                    steps {
+                        archiveArtifacts artifacts: env.ARTIFACT_PATH, followSymlinks: false
                     }
                 }
             }
