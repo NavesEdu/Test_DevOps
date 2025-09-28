@@ -182,4 +182,4 @@ A etapa de `Archive Artifacts` será substituída por:
 #### 2. Implementação de CD e Deploy Automatizado
 
 * **Stage de Deploy:** Adicionar uma *Stage* de **`Deploy to Staging`** após o sucesso do *push* da imagem.
-* **Tecnologia:** Utilizar uma ferramenta de orquestração moderna como **Kubernetes (via `kubectl` ou Helm Charts)** para gerenciar o ambiente de *staging* e produção, demonstrando familiaridade com a infraestrutura de *Cloud Native*.
+* **Tecnologia:** Utilizar uma ferramenta de orquestração moderna como **Kubernetes (via `kubectl` ou Helm Charts)** para gerenciar o ambiente de *staging* e produção.
