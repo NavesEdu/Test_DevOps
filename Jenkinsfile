@@ -53,11 +53,14 @@ pipeline {
                 stage('Archive Artifacts') {
                     when { expression { return params.GENERATE_ARTIFACT || currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause') } }
                     steps {
-                        def timestamp = new Date().format("yyyyMMdd-HHmmss", TimeZone.getTimeZone('UTC'))
+                        script {
+                            def timestamp = new Date().format("yyyyMMdd-HHmmss", TimeZone.getTimeZone('UTC'))
                             def artifactFileName = "${env.ARTIFACT_NAME}-${timestamp}"
                             def artifactFullPath = "${env.ARTIFACT_PATH}"
 
+                            echo "Artifact will be archived as: ${artifactFileName}"
                             archiveArtifacts artifacts: artifactFullPath, fingerprint: true
+                        }
                     }
                 }
             }
