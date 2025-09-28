@@ -6,7 +6,7 @@ LDFLAGS = -pthread
 # Define source directories
 SRC_DIR = src
 OBJ_DIR = obj
-BIN_DIR = bin
+BIN_DIR = $(SRC_DIR)/bin
 
 # Find all .cpp files in src and tests directories
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
