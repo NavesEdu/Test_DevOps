@@ -11,7 +11,7 @@ pipeline {
 
     environment {
         ARTIFACT_NAME = 'calculator'
-        ARTIFACT_PATH = "src/bin/${ARTIFACT_NAME}"
+        ARTIFACT_PATH = "calculator/src/bin/${ARTIFACT_NAME}"
     }
 
     stages {
