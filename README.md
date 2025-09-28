@@ -78,6 +78,7 @@ Toda a infraestrutura do Jenkins é inicializada via IaC, utilizando o Docker Co
     docker compose up -d
     ```
     *Resultado:* Esta ação constrói as imagens customizadas do **Controller** e dos **dois Agents** (`agent1` e `agent2`) e inicia os três serviços em segundo plano.
+<img width="1087" height="287" alt="Image" src="https://github.com/user-attachments/assets/703443db-9d55-4eb6-adee-daf7395eec6f" />
 
 3.  **Acesso ao Jenkins UI:**
     Após a inicialização (que pode levar alguns minutos), o Jenkins estará acessível e já configurado pelo JCasC.
