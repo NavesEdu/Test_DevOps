@@ -13,6 +13,7 @@ pipeline {
     environment {
         ARTIFACT_NAME = 'calculator'
         ARTIFACT_PATH = "calculator/src/bin/${ARTIFACT_NAME}"
+        // EMAIL_RECIPIENTS = 'eduardonaves41@gmail.com'
     }
 
     stages {
@@ -68,6 +69,27 @@ pipeline {
     }
 
     post {
+        // success {
+        //     echo 'Pipeline finalizada com SUCESSO. Enviando notificação...'
+        //     emailext(
+        //         subject: "✅ SUCESSO: Pipeline ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
+        //         body: "A pipeline ${env.JOB_NAME} foi concluída com sucesso.\nBuild URL: ${env.BUILD_URL}",
+        //         recipientList: env.EMAIL_RECIPIENTS,
+        //         attachLog: true
+        //     )
+        // }
+
+        // failure {
+        //     echo 'Pipeline finalizada com FALHA. Enviando notificação de erro...'
+        //     emailext(
+        //         subject: "❌ FALHA: Pipeline ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
+        //         body: "ATENÇÃO: A pipeline ${env.JOB_NAME} FALHOU.\nPor favor, verifique o log em: ${env.BUILD_URL}/console",
+        //         recipientList: env.EMAIL_RECIPIENTS,
+        //         attachLog: true, // Anexa o log completo da build
+        //         compressLog: true
+        //     )
+        // }
+
         always {
             echo 'Pipeline finalizado.'
         }

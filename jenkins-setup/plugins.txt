@@ -7,3 +7,4 @@ role-strategy:latest
 workflow-aggregator:latest
 workflow-multibranch:latest
 blueocean:latest
+email-ext:latest
