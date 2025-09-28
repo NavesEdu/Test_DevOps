@@ -3,6 +3,7 @@ pipeline {
 
     parameters {
         booleanParam(name: 'SKIP_CHECKS_AND_TESTS', defaultValue: false, description: 'Marque esta opção para um build rápido que apenas gera o artefato, pulando as verificações de código e os testes.')
+        booleanParam(name: 'GENERATE_ARTIFACT', defaultValue: false, description: 'Marque para gerar artefato manualmente sem esperar o cron.')
     }
 
     triggers {
@@ -50,8 +51,13 @@ pipeline {
                 }
 
                 stage('Archive Artifacts') {
+                    when { expression { return params.GENERATE_ARTIFACT || currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause') } }
                     steps {
-                        archiveArtifacts artifacts: env.ARTIFACT_PATH, followSymlinks: false
+                        def timestamp = new Date().format("yyyyMMdd-HHmmss", TimeZone.getTimeZone('UTC'))
+                            def artifactFileName = "${env.ARTIFACT_NAME}-${timestamp}"
+                            def artifactFullPath = "${env.ARTIFACT_PATH}"
+
+                            archiveArtifacts artifacts: artifactFullPath, fingerprint: true
                     }
                 }
             }
